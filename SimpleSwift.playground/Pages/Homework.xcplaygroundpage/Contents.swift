@@ -61,17 +61,35 @@ func calculate(_ args: [String]) -> Int {
         if args[0] == "fact" {
             return 0
         }
-        for arg in args.dropLast() {
-            return -1
+        var total = 1
+        let num = Int(args[0])
+        if num! == 0 || num! == 1 {
+            return 1
         }
+        for i in 1...num! {
+            total = total * i
+        }
+        return total
     }
     
+    let symbol = args[1]
+    if symbol == "+" {
+        return Int(args[0])! + Int(args[2])!
+    } else if symbol == "-" {
+        return Int(args[0])! - Int(args[2])!
+    } else if symbol == "*" {
+        return Int(args[0])! * Int(args[2])!
+    } else if symbol == "/" {
+        return Int(args[0])! / Int(args[2])!
+    } else if symbol == "%" {
+        return Int(args[0])! % Int(args[2])!
+    }
+    return Int(args[0])!
     
-    return -1
 }
 
 func calculate(_ arg: String) -> Int {
-    return -1
+    return calculate(arg.split(separator: " ").map { String($0) })
 }
 
 //: Below this are the test expressions/calls to verify if your code is correct.
