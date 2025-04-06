@@ -27,6 +27,46 @@ print("Welcome to the UW Calculator Playground")
 //: For this latter set of operations, it is safe to assume that `["count"]` (with no additional arguments) is 0, `["avg"]` is also 0, and `["fact"]` is 0. `["1", "fact"]` should return 1, and `["0", "fact"]` should also return 1. (Yes, 0-factorial is 1. True story.)
 //: 
 func calculate(_ args: [String]) -> Int {
+    if args.count < 1 {
+        return -1
+    }
+    
+    // count method
+    if args.last == "count" {
+        if args[0] == "count" {
+            return 0
+        }
+        return args.count-1
+    }
+    
+    // average method
+    if args.last == "avg" {
+        var total = 0
+        if args[0] == "avg" {
+            return 0
+        }
+        
+        for arg in args {
+            if arg == "avg" {
+                break
+            }
+            let num = Int(arg)
+            total = total + num!
+        }
+        return total / (args.count-1)
+    }
+    
+    // fact method
+    if args.last == "fact" {
+        if args[0] == "fact" {
+            return 0
+        }
+        for arg in args.dropLast() {
+            return -1
+        }
+    }
+    
+    
     return -1
 }
 
