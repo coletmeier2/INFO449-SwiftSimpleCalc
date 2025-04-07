@@ -134,16 +134,7 @@ calculate("1 2 3 4 5 count") == 5
 calculate("1 2 3 4 5 avg") == 3
 calculate("5 fact") == 120
 
-//: -------------------------------------------
-//: These are extra credit tests; they are commented out 
-//: so that they do not conflict with you work until you 
-//: choose to implement them.
-//: Uncomment them to turn them on for evaluation.
-//:
-//: Implement `calculate([String])` and `calculate(String)` to handle negative numbers. You need only make the tests below pass. (You do not need to worry about "fact"/factorial with negative numbers, for example.)
-//:
-//: This is worth 1 pt
-/*
+
 calculate(["2", "+", "-2"]) == 0
 calculate(["2", "-", "-2"]) == 4
 calculate(["2", "*", "-2"]) == -4
@@ -158,7 +149,7 @@ calculate("2 - -2") == 4
 calculate("-2 / 2") == -1
 
 calculate("1 -2 3 -4 5 count") == 5
-*/
+
  
 //: Implement `calculate([String])` and `calculate(String)` to use 
 //: and return floating-point values. You need only make the tests 
@@ -170,12 +161,69 @@ calculate("1 -2 3 -4 5 count") == 5
 //: Integer-based versions above.
 //: 
 //: This is worth 1 pt
-/*
+
 func calculate(_ args: [String]) -> Double {
-    return -1.0
+    if args.count < 1 {
+        return -1
+    }
+    
+    // count method
+    if args.last == "count" {
+        if args[0] == "count" {
+            return 0
+        }
+        return Double(args.count-1)
+    }
+    
+    // average method
+    if args.last == "avg" {
+        var total = 0.0
+        if args[0] == "avg" {
+            return 0.0
+        }
+        
+        for arg in args {
+            if arg == "avg" {
+                break
+            }
+            let num = Double(arg)
+            total = total + num!
+        }
+        return Double(total / Double(args.count-1))
+    }
+    
+    // fact method
+    if args.last == "fact" {
+        if args[0] == "fact" {
+            return 0
+        }
+        var total = 1
+        let num = Int(args[0])
+        if num! == 0 || num! == 1 {
+            return 1
+        }
+        for i in 1...num! {
+            total = total * i
+        }
+        return Double(total)
+    }
+    
+    let symbol = args[1]
+    if symbol == "+" {
+        return Double(args[0])! + Double(args[2])!
+    } else if symbol == "-" {
+        return Double(args[0])! - Double(args[2])!
+    } else if symbol == "*" {
+        return Double(args[0])! * Double(args[2])!
+    } else if symbol == "/" {
+        return Double(args[0])! / Double(args[2])!
+    } else if symbol == "%" {
+        return Double(args[0])!.truncatingRemainder(dividingBy: Double(args[2])!)
+    }
+    return Double(args[0])!
 }
 func calculate(_ arg: String) -> Double {
-    return -1.0
+    return calculate(arg.split(separator: " ").map { String($0) })
 }
 
 calculate(["2.0", "+", "2.0"]) == 4.0
@@ -185,4 +233,4 @@ calculate(["2.5", "*", "2.5"]) == 6.25
 calculate(["2.0", "/", "2.0"]) == 1.0
 calculate(["2.0", "%", "2.0"]) == 0.0
 calculate("1.0 2.0 3.0 4.0 5.0 count") == 5.0
-*/
+
